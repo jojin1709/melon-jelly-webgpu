@@ -19,12 +19,7 @@ An interactive 3D watermelon-jelly slice you can stretch, poke, wobble, and slic
 
 [**👉 Launch Live WebGPU Demo 👈**](https://jojin1709.github.io/melon-jelly-webgpu/)
 
-<p>Or run locally in two commands (no install or build required):</p>
-
-```bash
-git clone https://github.com/jojin1709/melon-jelly-webgpu.git
-npx serve melon-jelly-webgpu
-```
+<br>
 
 <sub>Requires a WebGPU-compatible browser: Chrome/Edge 113+, Safari 26+, or Firefox with WebGPU enabled.</sub>
 
@@ -48,10 +43,6 @@ npx serve melon-jelly-webgpu
   - [Why WebGPU and XPBD?](#why-webgpu-and-xpbd)
   - [The Single-File Philosophy](#the-single-file-philosophy)
 - [Interactive Controls & Shortcuts](#interactive-controls--shortcuts)
-- [Quick Start](#quick-start)
-  - [Prerequisites](#prerequisites)
-  - [Run Locally](#run-locally)
-  - [Deploy to GitHub Pages / Vercel](#deploy-to-github-pages--vercel)
 - [🤖 Prompt to Build with Claude](#-prompt-to-build-with-claude)
 - [Key Features & Capabilities](#key-features--capabilities)
   - [Soft-Body Simulation](#soft-body-simulation)
@@ -133,36 +124,6 @@ The entire application is contained in a **single `index.html` file**:
 - **Knife Mode:** Drag a line across the slice and release to drop the blade.
 - **Camera:** Right-click drag or middle-click drag to orbit and examine the cut surfaces.
 
----
-
-## Quick Start
-
-### Prerequisites
-- A modern desktop or mobile browser with **WebGPU enabled** (Chrome 113+, Edge 113+, Safari 26+, or Chrome for Android).
-- Hardware acceleration enabled in your browser settings.
-
-### Run Locally
-
-Since there are no dependencies or build steps, you can serve the directory using any HTTP server:
-
-```bash
-# 1. Clone the repository
-git clone https://github.com/jojin1709/melon-jelly-webgpu.git
-
-# 2. Navigate to directory
-cd melon-jelly-webgpu
-
-# 3. Serve via Python or Node
-npx serve .
-# or: python -m http.server 8080
-```
-
-Open `http://localhost:3000` (or `http://localhost:8080`) in your browser.
-
-### Deploy to GitHub Pages / Vercel
-
-- **GitHub Pages:** Go to **Settings → Pages**, select source `Deploy from a branch`, choose branch `main` and folder `/ (root)`.
-- **Vercel / Netlify:** Import repository as a static site (leave build command blank and publish directory as `.`).
 
 ---
 
