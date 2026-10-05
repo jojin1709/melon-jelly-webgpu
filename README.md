@@ -1,121 +1,339 @@
+> [!NOTE]
+> **[Melon Jelly WebGPU is live](https://jojin1709.github.io/melon-jelly-webgpu/):** Experience real-time XPBD soft-body physics, dynamic mesh cutting, volumetric Beer–Lambert refraction, and procedural audio synthesis — all in **one self-contained HTML file** with zero external dependencies.
+
+<div align="center">
+
 # 🍉 Melon Jelly
 
-An interactive 3D watermelon-jelly slice you can stretch, poke and cut with a knife. It runs in the browser as **one self-contained HTML file** with real soft-body physics and a custom WebGPU renderer. No libraries, no build step.
+### Real-Time Soft-Body Physics & Volumetric Shaders in Pure WebGPU
 
-> **Live demo:** `https://jojin1709.github.io/melon-jelly-webgpu/`
-> **Needs WebGPU:** recent Chrome or Edge on desktop, or another browser with WebGPU turned on.
+An interactive 3D watermelon-jelly slice you can stretch, poke, wobble, and slice into pieces with a knife right in your browser.
 
-<!-- Add a screenshot or GIF here: ![Melon Jelly](screenshot.png) -->
+[![Live Demo](https://img.shields.io/badge/demo-live%20on%20GitHub%20Pages-2ea44f?style=for-the-badge&logo=github)](https://jojin1709.github.io/melon-jelly-webgpu/)
+[![WebGPU](https://img.shields.io/badge/WebGPU-Ready-blue?style=for-the-badge&logo=webgpu)](https://caniuse.com/webgpu)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
+[![GitHub Stars](https://img.shields.io/github/stars/jojin1709/melon-jelly-webgpu?style=for-the-badge&color=critical)](https://github.com/jojin1709/melon-jelly-webgpu/stargazers)
+[![LinkedIn](https://img.shields.io/badge/Author-JOJIN%20JOHN-0077B5?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/jojin-john/)
 
----
+<p><strong>Experience Melon Jelly Online</strong></p>
 
-## ✨ Features
+[**👉 Launch Live WebGPU Demo 👈**](https://jojin1709.github.io/melon-jelly-webgpu/)
 
-- **Soft-body jelly:** a tetrahedral mesh solved with XPBD at a fixed 60 Hz. The rind is about 3× stiffer than the flesh.
-- **Hand tool:** grab any part and pull, scroll or use two fingers to twist, and tap a piece to flick it.
-- **Knife tool:** draw a line across the slice and the knife lines up and cuts it into pieces. You can cut pieces again, up to 14 pieces.
-- **Angled cuts:** rotate the cut angle in 15° steps for one-tap cuts.
-- **Undo cut:** step back through your cuts.
-- **Jelly look:** refraction, thickness-based absorption, Fresnel reflection, soft shadows and tone mapping. Seeds and air bubbles ride along inside the flesh.
-- **Varieties:** Crimson, Golden, Rosé, Lime, Ube and Berry, plus a custom colour picker.
-- **Texture presets:** Gelatin, Mochi and Slime, with Firmness and Internal damping sliders.
-- **Sound:** squish, wobble, wet slice and undo sounds made with WebAudio, plus optional ambient music and a volume slider.
-- **Extras:** Night studio mode, auto-orbit, low gravity, slow-mo cuts, ¼ speed, show mesh, phone haptics, save PNG, record 6 s as WebM, and a share link.
-- **Live readouts:** mass, volume, kinetic energy, pieces, and cut counts.
-- **Accessibility:** visible focus outlines, labelled controls, bigger touch targets on phones, and reduced-motion support.
-
----
-
-## 🚀 Run it
-
-No install needed.
+<p>Or run locally in two commands (no install or build required):</p>
 
 ```bash
 git clone https://github.com/jojin1709/melon-jelly-webgpu.git
-cd melon-jelly-webgpu
+npx serve melon-jelly-webgpu
 ```
 
-Then open `index.html` in a WebGPU-capable browser. Or serve it locally:
+<sub>Requires a WebGPU-compatible browser: Chrome/Edge 113+, Safari 26+, or Firefox with WebGPU enabled.</sub>
+
+---
+
+<a href="https://jojin1709.github.io/melon-jelly-webgpu/"><img src="https://img.shields.io/badge/🍉_Launch_Interactive_App-Click_Here-9e1b2b?style=for-the-badge" alt="Launch App" height="38"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.linkedin.com/in/jojin-john/"><img src="https://img.shields.io/badge/Connect_on_LinkedIn-JOJIN_JOHN-0A66C2?style=for-the-badge&logo=linkedin" alt="LinkedIn" height="38"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://github.com/jojin1709/melon-jelly-webgpu/issues"><img src="https://img.shields.io/badge/Report_Issue-GitHub-333333?style=for-the-badge&logo=github" alt="Report Issue" height="38"></a>
+
+---
+
+</div>
+
+> [!TIP]
+> **Quick Keyboard Shortcuts:** Press <kbd>H</kbd> for Hand tool, <kbd>K</kbd> for Knife, <kbd>C</kbd> to make an angled cut, <kbd>Z</kbd> to undo, <kbd>D</kbd> for Night Studio mode, and <kbd>Space</kbd> to pause the physics simulation.
+
+---
+
+## Table of Contents
+
+- [What is Melon Jelly?](#what-is-melon-jelly)
+  - [Why Melon Jelly Exists](#why-melon-jelly-exists)
+  - [Why WebGPU and XPBD?](#why-webgpu-and-xpbd)
+  - [The Single-File Philosophy](#the-single-file-philosophy)
+- [Interactive Controls & Shortcuts](#interactive-controls--shortcuts)
+- [Quick Start](#quick-start)
+  - [Prerequisites](#prerequisites)
+  - [Run Locally](#run-locally)
+  - [Deploy to GitHub Pages / Vercel](#deploy-to-github-pages--vercel)
+- [Key Features & Capabilities](#key-features--capabilities)
+  - [Soft-Body Simulation](#soft-body-simulation)
+  - [Dynamic Knife Slicing](#dynamic-knife-slicing)
+  - [Physically Inspired Jelly Rendering](#physically-inspired-jelly-rendering)
+  - [Interactive Audio Synthesis](#interactive-audio-synthesis)
+- [Flavours & Texture Presets](#flavours--texture-presets)
+- [System Architecture](#system-architecture)
+  - [Pipeline Overview](#pipeline-overview)
+  - [How Dynamic Slicing Works](#how-dynamic-slicing-works)
+- [Browser Compatibility](#browser-compatibility)
+- [Roadmap](#roadmap)
+- [License](#license)
+- [Author & Acknowledgements](#author--acknowledgements)
+- [Common Questions (FAQ)](#common-questions)
+
+---
+
+## What is Melon Jelly?
+
+**Melon Jelly** is a technical demonstration of real-time continuum mechanics and advanced graphics inside modern web browsers. It simulates an elastic, gelatinous slice of watermelon with a stiff rind and soft translucent flesh containing embedded seeds and air bubbles.
+
+You can grab and tug it with a hand tool, flick it to watch it jiggle, or drag a knife across it to slice it into smaller, independently simulated soft-body pieces in real time.
+
+<a id="why-melon-jelly-exists"></a>
+<details>
+<summary><strong>Why Melon Jelly Exists</strong></summary>
+
+Most web 3D demos rely on rigid bodies, baked animations, or heavy third-party physics engines (like Ammo.js or Rapier) running inside complex npm build setups. 
+
+Melon Jelly was created to demonstrate what modern browsers can accomplish natively using **pure WebGPU and mathematical first principles**:
+- Real volumetric soft-body elasticity (XPBD) running at 600 substeps/second.
+- Real-time tetrahedral mesh clipping and topological reconstruction when cut.
+- High-end optical effects (refraction, absorption, thickness estimation, Fresnel, GGX highlights) written in custom WGSL shaders.
+- Procedural audio synthesized from scratch with the Web Audio API.
+
+</details>
+
+<a id="why-webgpu-and-xpbd"></a>
+<details>
+<summary><strong>Why WebGPU and XPBD?</strong></summary>
+
+- **WebGPU** brings low-overhead GPU access, modern compute and render pipelines, and first-class WGSL shading. This enables two-pass front/back depth peeling to compute ray traversal thickness through translucent jelly.
+- **Extended Position Based Dynamics (XPBD)** replaces traditional spring-mass penalty systems with unconditionally stable, constraint-based deformation. By separating stiffness from time-step duration, XPBD prevents explosive instabilities during aggressive grabbing and cutting.
+
+</details>
+
+<a id="the-single-file-philosophy"></a>
+<details>
+<summary><strong>The Single-File Philosophy</strong></summary>
+
+The entire application is contained in a **single `index.html` file**:
+- **0 dependencies:** No Three.js, Babylon.js, Webpack, Vite, or npm modules.
+- **Instant load:** Download and double-click to run in any WebGPU-capable browser.
+- **Preserved forever:** Completely decoupled from changing frontend toolchains and packaging ecosystem shifts.
+
+</details>
+
+---
+
+## Interactive Controls & Shortcuts
+
+| Input | Action | Description |
+|:---:|:---|:---|
+| <kbd>H</kbd> | **Hand Tool** | Grab, stretch, pull, or flick any part of the jelly |
+| <kbd>K</kbd> | **Knife Tool** | Draw a cut line across any piece to slice it |
+| <kbd>C</kbd> | **Quick Cut** | Instant slice along current cut angle (`Shift+C` reverses angle) |
+| <kbd>[</kbd> / <kbd>]</kbd> | **Rotate Blade** | Rotate knife cut angle in 15° increments |
+| <kbd>Z</kbd> | **Undo Cut** | Revert the last slice back into its parent piece |
+| <kbd>N</kbd> | **Nudge** | Apply a sharp impulse to make the jelly jiggle |
+| <kbd>R</kbd> | **Reset** | Restore the original uncut watermelon wedge |
+| <kbd>Space</kbd> | **Pause** | Freeze / resume physical simulation |
+| <kbd>O</kbd> | **Auto-Orbit** | Smooth cinematic camera rotation around the specimen |
+| <kbd>D</kbd> | **Night Studio** | Toggle high-contrast dark studio lighting |
+| <kbd>P</kbd> | **Save PNG** | Snapshot high-resolution screenshot of current frame |
+
+### Mouse & Touch Gestures
+- **Hand Mode:** Click/touch and drag to pull. Scroll wheel or two-finger pinch to twist. Quick tap to flick.
+- **Knife Mode:** Drag a line across the slice and release to drop the blade.
+- **Camera:** Right-click drag or middle-click drag to orbit and examine the cut surfaces.
+
+---
+
+## Quick Start
+
+### Prerequisites
+- A modern desktop or mobile browser with **WebGPU enabled** (Chrome 113+, Edge 113+, Safari 26+, or Chrome for Android).
+- Hardware acceleration enabled in your browser settings.
+
+### Run Locally
+
+Since there are no dependencies or build steps, you can serve the directory using any HTTP server:
 
 ```bash
+# 1. Clone the repository
+git clone https://github.com/jojin1709/melon-jelly-webgpu.git
+
+# 2. Navigate to directory
+cd melon-jelly-webgpu
+
+# 3. Serve via Python or Node
 npx serve .
+# or: python -m http.server 8080
 ```
 
-### Deploy
+Open `http://localhost:3000` (or `http://localhost:8080`) in your browser.
 
-- **GitHub Pages:** Settings → Pages → deploy from the `main` branch, root folder.
-- **Vercel / Netlify:** import the repo as a static site, with no build command.
+### Deploy to GitHub Pages / Vercel
 
----
-
-## 🎮 Controls
-
-| Key | Action |
-|---|---|
-| `H` | Hand tool |
-| `K` | Knife tool |
-| `C` | Cut across the slice (`Shift+C` for the other direction) |
-| `[` `]` | Rotate cut angle |
-| `Z` | Undo cut |
-| `N` | Give it a nudge |
-| `R` | Reset |
-| `P` | Save PNG |
-| `O` | Auto-orbit |
-| `D` | Night studio |
-| `Space` | Pause |
-
-**Mouse and touch**
-- **Hand:** drag to pull, scroll or add a second finger to twist, and tap to flick.
-- **Knife:** drag a line across the jelly and release to cut.
+- **GitHub Pages:** Go to **Settings → Pages**, select source `Deploy from a branch`, choose branch `main` and folder `/ (root)`.
+- **Vercel / Netlify:** Import repository as a static site (leave build command blank and publish directory as `.`).
 
 ---
 
-## 🧪 How it works
+## Key Features & Capabilities
 
-- **Physics:** the slice is a volumetric mesh of tetrahedra solved with XPBD. Damping acts only on relative velocity along the mesh edges, so pieces still fall and tumble freely while the wobble settles.
-- **Cutting:** every piece is a convex outline in the slice's rest plane. A stroke fixes a vertical blade plane, each piece is clipped against it, and every new piece gets its own simulation and render mesh.
-- **Surface:** the smooth surface, seeds and bubbles are separate meshes pinned to tetrahedra with barycentric weights, so they stretch and turn with the jelly.
-- **Rendering:** WGSL shaders draw the floor, seeds and bubbles first, then measure how much jelly each view ray crosses and use that for refraction and absorption.
+### Soft-Body Simulation
+- **Tetrahedral XPBD:** Volumetric mesh simulated at a fixed 60 Hz rate with 10 substeps per frame.
+- **Heterogeneous Material Stiffness:** Watermelon rind is calibrated at **~3× the stiffness** of the soft inner flesh.
+- **Volume Conservation:** Hydrostatic pressure constraints preserve total volume under compression and stretching.
+- **Edge Damping:** Relative velocity damping dampens internal vibrations without slowing rigid body falls or spins.
 
-The full write-up is in the "Inside the experiment" panel on the page.
+### Dynamic Knife Slicing
+- **Real-Time Splitting:** Generates fresh tetrahedral meshes on release when a blade plane intersects convex contours.
+- **State Inheritance:** Split halves inherit particle velocity, barycentric weights, and internal strain from the parent.
+- **Multi-Piece Support:** Slice pieces recursively into up to 14 independent soft bodies with mutual floor contact.
+- **Interactive Undo:** History stack allows stepping back through cuts seamlessly.
 
----
+### Physically Inspired Jelly Rendering
+- **Volumetric Absorption:** Beer–Lambert exponential decay based on internal ray traversal distance.
+- **Dual-Pass Depth Peeling:** Measures thickness between front-facing and back-facing geometry.
+- **Refraction & Dispersion:** Ray bending with microfacet GGX specular highlights and procedural environment reflections.
+- **Embedded Barycentric Anchors:** Seeds and micro-bubbles are permanently tied to surrounding tetrahedra.
 
-## 🌐 Browser support
-
-| Browser | Status |
-|---|---|
-| Chrome / Edge (desktop, recent) | ✅ WebGPU on by default |
-| Chrome on Android (recent) | ✅ on supported devices |
-| Safari 26+ | ✅ WebGPU supported |
-| Firefox | ⚠️ depends on version and flags |
-
-If WebGPU isn't available, the page shows a fallback card instead of crashing.
-
----
-
-## ⚠️ Known limits
-
-- Needs WebGPU, and there is no WebGL fallback yet.
-- Only the wedge shape for now.
-- The Quality toggle lowers render resolution only. Mesh density is not adjustable yet.
-
-## 🗺️ Ideas for later
-
-- New shapes (cube, wedge, whole melon)
-- WebGL fallback
-- Mesh-density quality setting
-- Bite mode, floor ripples, drag-and-stack pieces
+### Interactive Audio Synthesis
+- **Zero Audio Assets:** Procedural audio synthesis via Web Audio API.
+- **Tactile Sound Effects:** Physics-driven wobbles, squishes, blade cuts, and elastic pops generated dynamically.
+- **Optional Ambient Track:** Relaxing generative background soundscape with volume controls.
 
 ---
 
-## 👤 Author
+## Flavours & Texture Presets
 
-Developed by **[JOJIN JOHN](https://www.linkedin.com/in/jojin-john/)**
+| Flavour Variety | Color Profile | Seed Count | Aesthetics |
+|:---|:---|:---:|:---|
+| **Crimson** | Classic ruby-red flesh & emerald rind | High | Fresh summer watermelon |
+| **Golden** | Sunny yellow flesh & bright rind | Moderate | Crisp golden honeydew hybrid |
+| **Rosé** | Subtle pastel pink & soft mint | Low | Delicately translucent jelly |
+| **Lime** | Zesty citrus green & deep rind | Low | Neon sour lime gelatin |
+| **Ube** | Rich royal purple & dark peel | Moderate | Sweet taro / ube dessert |
+| **Berry** | Deep dark berry red & violet peel | High | Rich wild fruit preserve |
+| **Custom** | Hex Color Picker | User-defined | Personalized jelly creations |
 
-- GitHub: [@jojin1709](https://github.com/jojin1709)
-- LinkedIn: [jojin-john](https://www.linkedin.com/in/jojin-john/)
+### Texture Presets
+- **Gelatin:** Balanced elasticity, high bounce, moderate compliance.
+- **Mochi:** Dense, highly damped, slow recovery with chewy resistance.
+- **Slime:** Low firmness, ultra-pliable, loose deformation under gravity.
 
-## 📄 License
+---
 
-MIT. See `LICENSE`.
+## System Architecture
+
+### Pipeline Overview
+
+```mermaid
+flowchart TD
+    subgraph Input["Input & Gestures"]
+        MOUSE["Pointer / Touch Events"]
+        KEYS["Keyboard Shortcuts"]
+    end
+
+    subgraph Simulation["XPBD Physics Engine (60Hz / 10 Substeps)"]
+        XPBD["Co-rotational Elastic Constraints"]
+        VOL["Volume Preservation Constraints"]
+        DAMP["Relative Edge Damping"]
+        FLOOR["Ground Plane & Friction Collision"]
+    end
+
+    subgraph Slicing["Dynamic Mesh Topology"]
+        CUT["Blade Intersection Plane"]
+        SPLIT["Tetrahedral Clipping & Tessellation"]
+        BARY["Barycentric Re-anchoring (Seeds & Bubbles)"]
+    end
+
+    subgraph Graphics["WebGPU Rendering Pipeline"]
+        PASS1["Pass 1: Floor & Embedded Seeds/Bubbles"]
+        PASS2["Pass 2: Back-Face Depth (Thickness Map)"]
+        PASS3["Pass 3: Front-Face Shading (Beer-Lambert + Refraction)"]
+        SHADOW["Pass 4: Soft Contact Shadow & Ground Occlusion"]
+    end
+
+    subgraph Audio["Web Audio Procedural Synthesis"]
+        AUDIO["Squish / Wobble / Slice Synthesizer"]
+    end
+
+    MOUSE --> XPBD
+    KEYS --> XPBD
+    XPBD --> VOL --> DAMP --> FLOOR
+    FLOOR --> CUT
+    CUT --> SPLIT --> BARY
+    BARY --> PASS1
+    PASS1 --> PASS2 --> PASS3 --> SHADOW
+    XPBD -. Kinetic Energy & Impulse .-> AUDIO
+```
+
+<a id="how-dynamic-slicing-works"></a>
+<details>
+<summary><strong>Deep Dive: How Dynamic Slicing Works</strong></summary>
+
+1. **Stroke Projection:** When you drag the knife tool, the screen stroke is unprojected into a 3D cutting plane.
+2. **Pose Inversion:** Each piece's current non-rigid orientation is inverted using best-fit rigid transformation back to its rest configuration.
+3. **Planar Polygon Splitting:** The slice's 2D rest boundary polygon is clipped against the cutting plane into two sub-polygons.
+4. **Volumetric Extrusion:** Both sub-polygons are extruded and triangulated into fresh 3D tetrahedral lattices.
+5. **Velocity & Strain Transfer:** Rest points are assigned spatial velocities and deformations interpolated from the parent body's XPBD particles.
+6. **Barycentric Remapping:** Seeds and bubbles inside the cut piece are tested against the new tetrahedra and bound to their new parent.
+
+</details>
+
+---
+
+## Browser Compatibility
+
+| Browser | Platform | Compatibility | Notes |
+|:---|:---|:---:|:---|
+| **Google Chrome** | Windows / macOS / Linux / ChromeOS | ✅ Supported | Default enabled (v113+) |
+| **Microsoft Edge** | Windows / macOS | ✅ Supported | Default enabled (v113+) |
+| **Apple Safari** | macOS / iOS / iPadOS | ✅ Supported | Enabled in Safari 26+ / iOS 17+ |
+| **Chrome for Android** | Android 12+ | ✅ Supported | Requires WebGPU-capable hardware |
+| **Mozilla Firefox** | Windows / Linux / macOS | ⚠️ Flag required | `dom.webgpu.enabled = true` in `about:config` |
+
+> [!WARNING]
+> If WebGPU is unavailable or disabled, Melon Jelly displays an informative diagnostic screen explaining how to activate hardware acceleration or update your browser.
+
+---
+
+## Roadmap
+
+- [x] XPBD soft-body tetrahedral solver with 10 substeps
+- [x] Dynamic planar knife cutting with real-time retriangulation
+- [x] Custom WGSL dual-depth Beer–Lambert absorption shader
+- [x] Procedural Web Audio effects (slice, stretch, wobble)
+- [x] Mobile touch gestures & haptic feedback integration
+- [x] Night Studio mode & automatic camera orbit
+- [ ] Alternative shapes (Cube jelly, Melon spheres, Multi-wedge bowls)
+- [ ] Drag-and-stack piece collision support
+- [ ] Adjustable volumetric mesh density slider
+- [ ] WebGL2 fallback rendering pipeline
+
+---
+
+## License
+
+This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for details.
+
+---
+
+## Author & Acknowledgements
+
+Developed with passion by **[JOJIN JOHN](https://www.linkedin.com/in/jojin-john/)**
+
+- **GitHub:** [@jojin1709](https://github.com/jojin1709)
+- **LinkedIn:** [jojin-john](https://www.linkedin.com/in/jojin-john/)
+
+Special acknowledgements to the WebGPU Working Group, Matthias Müller et al. for the foundational XPBD papers, and Inigo Quilez for SDF mathematical formulations.
+
+---
+
+## Common Questions (FAQ)
+
+### Can I run this completely offline without an internet connection?
+Yes. There are zero remote CDNs, fonts, or scripts. Once downloaded, `index.html` runs offline in any WebGPU-capable browser.
+
+### Why doesn't the jelly collapse into a flat puddle under gravity?
+The XPBD solver enforces both **deviatoric elasticity** (restoring resting element shapes) and **hydrostatic volume preservation constraints** on every tetrahedron. Even when heavily compressed or stretched, the internal pressure pushes back to preserve total volumetric displacement.
+
+### How does the slice maintain seeds and bubbles inside after being cut?
+Seeds and bubbles are embedded within the soft body using **barycentric coordinates**. When a cut occurs, each seed is tested against the newly generated tetrahedra in the subdivided piece, recalculating its barycentric coordinates so it continues moving seamlessly with its new host piece.
+
+### Can I embed this into my own website or portfolio?
+Yes! Since it is MIT licensed and contained in a single file, you can host it or drop it directly into an `<iframe>` on any modern web page.
+
+---
+
+<div align="center">
+<sub>Crafted with precision by <a href="https://www.linkedin.com/in/jojin-john/">JOJIN JOHN</a> · © 2026</sub>
+</div>
