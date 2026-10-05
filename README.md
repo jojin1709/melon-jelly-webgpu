@@ -9,25 +9,16 @@
 
 An interactive 3D watermelon-jelly slice you can stretch, poke, wobble, and slice into pieces with a knife right in your browser.
 
-[![Live Demo](https://img.shields.io/badge/demo-live%20on%20GitHub%20Pages-2ea44f?style=for-the-badge&logo=github)](https://jojin1709.github.io/melon-jelly-webgpu/)
-[![WebGPU](https://img.shields.io/badge/WebGPU-Ready-blue?style=for-the-badge&logo=webgpu)](https://caniuse.com/webgpu)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
-[![GitHub Stars](https://img.shields.io/github/stars/jojin1709/melon-jelly-webgpu?style=for-the-badge&color=critical)](https://github.com/jojin1709/melon-jelly-webgpu/stargazers)
-[![LinkedIn](https://img.shields.io/badge/Author-JOJIN%20JOHN-0077B5?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/jojin-john/)
-
-<p><strong>Experience Melon Jelly Online</strong></p>
-
-[**👉 Launch Live WebGPU Demo 👈**](https://jojin1709.github.io/melon-jelly-webgpu/)
+[![Live Demo](https://img.shields.io/badge/🍉_Live_Demo-jojin1709.github.io-9e1b2b?style=for-the-badge&logo=githubpages&logoColor=white)](https://jojin1709.github.io/melon-jelly-webgpu/)
+[![WebGPU](https://img.shields.io/badge/WebGPU-Enabled-blue?style=for-the-badge&logo=webgpu&logoColor=white)](https://caniuse.com/webgpu)
+[![License: MIT](https://img.shields.io/badge/License-MIT-333333?style=for-the-badge)](LICENSE)
+[![LinkedIn](https://img.shields.io/badge/Author-JOJIN_JOHN-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/jojin-john/)
 
 <br>
 
-<sub>Requires a WebGPU-compatible browser: Chrome/Edge 113+, Safari 26+, or Firefox with WebGPU enabled.</sub>
+**[https://jojin1709.github.io/melon-jelly-webgpu/](https://jojin1709.github.io/melon-jelly-webgpu/)**
 
----
-
-<a href="https://jojin1709.github.io/melon-jelly-webgpu/"><img src="https://img.shields.io/badge/🍉_Launch_Interactive_App-Click_Here-9e1b2b?style=for-the-badge" alt="Launch App" height="38"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://www.linkedin.com/in/jojin-john/"><img src="https://img.shields.io/badge/Connect_on_LinkedIn-JOJIN_JOHN-0A66C2?style=for-the-badge&logo=linkedin" alt="LinkedIn" height="38"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="https://github.com/jojin1709/melon-jelly-webgpu/issues"><img src="https://img.shields.io/badge/Report_Issue-GitHub-333333?style=for-the-badge&logo=github" alt="Report Issue" height="38"></a>
-
----
+<sub>Single self-contained HTML file • Zero dependencies • Runs client-side in any WebGPU-capable browser.</sub>
 
 </div>
 
