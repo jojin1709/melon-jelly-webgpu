@@ -52,6 +52,7 @@ npx serve melon-jelly-webgpu
   - [Prerequisites](#prerequisites)
   - [Run Locally](#run-locally)
   - [Deploy to GitHub Pages / Vercel](#deploy-to-github-pages--vercel)
+- [🤖 Prompt to Build with Claude](#-prompt-to-build-with-claude)
 - [Key Features & Capabilities](#key-features--capabilities)
   - [Soft-Body Simulation](#soft-body-simulation)
   - [Dynamic Knife Slicing](#dynamic-knife-slicing)
@@ -162,6 +163,89 @@ Open `http://localhost:3000` (or `http://localhost:8080`) in your browser.
 
 - **GitHub Pages:** Go to **Settings → Pages**, select source `Deploy from a branch`, choose branch `main` and folder `/ (root)`.
 - **Vercel / Netlify:** Import repository as a static site (leave build command blank and publish directory as `.`).
+
+---
+
+## 🤖 Prompt to Build with Claude
+
+Want to generate, adapt, or build this entire specimen using **Claude** (such as Claude 3.5 / 3.7 Sonnet or Claude Opus)? Below is the complete prompt and technical specification used to build this single-file WebGPU & XPBD soft-body application:
+
+> [!TIP]
+> **Prompting Claude:** Copy and paste the prompt below directly into Claude with artifacts enabled.
+
+```text
+Build an interactive 3D "Melon Jelly" specimen as ONE self-contained HTML file
+(no external scripts or images; it must work when opened from a local file).
+
+REFERENCES (attached with this message)
+- Photos of real melon jelly / gummy: match the see-through depth, colour
+  gradient (deep red core, pale edge), shine, and the rind and seed placement.
+- [Describe the wobble clip]: e.g. "settles in about 1.5 seconds, 3 to 4 visible
+  bounces, soft and slow, not rubbery." Match this for the physics feel.
+- Style screenshots: copy [layout / title font / panel style / spacing].
+  Ignore [background / colours / anything else you don't want].
+  Match level: inspired by / as exact as possible.
+- Colour palette: [hex codes, or "watermelon red, pale green, dark green rind"].
+- Logo (optional): embed it small, inline as a data URI.
+- Sound reference: [describe it, e.g. "wet squelch, short, low, a bit sticky"].
+- Links to check: [paste any URLs I should read and match].
+- Do NOT do: [things you've seen elsewhere that felt wrong].
+
+LOOK
+- A translucent watermelon-jelly slice (wedge with a rind) on a soft studio floor.
+- Calm editorial style: serif italic title "Melon Jelly.", small caps labels,
+  warm grey background (#E2DFDA), thin hairline borders, no gradients or glow.
+- Caption: "A slice of summer. A little wobble. Too soft to share."
+- Credit line top-left under the caption: "Developed by JOJIN JOHN" linking to
+  https://www.linkedin.com/in/jojin-john/ (opens in a new tab).
+- Support a Night studio mode (dark background, light text).
+
+TECH
+- WebGPU + WGSL, no libraries. Soft body: tetrahedral mesh, XPBD, fixed 60 Hz step.
+- Rind about 3x stiffer than flesh; damping on relative edge velocity only.
+- Seeds and air bubbles stay attached to the flesh (barycentric skinning).
+- Jelly look: refraction, thickness-based absorption, Fresnel reflection,
+  soft shadows, tone mapping.
+- Show a friendly fallback card (with a small drawing and browser advice)
+  when WebGPU is not available.
+
+INTERACTION
+- Hand tool: grab any part and pull; scroll or two fingers to twist;
+  quick tap flicks a piece.
+- Knife tool: draw a line across the slice; a knife lines up and cuts the jelly
+  into convex pieces; pieces can be cut again (cap at 14 pieces).
+- Keyboard: H hand, K knife, C cut (Shift+C horizontal), [ ] rotate cut angle,
+  Z undo cut, N nudge, R reset, P save PNG, O auto-orbit, D night, Space pause.
+
+CONTROL PANEL (right side on desktop, stacked under the scene on phones)
+- Variety swatches, plus a custom colour picker.
+- Texture presets: Gelatin, Mochi, Slime. Sliders: Firmness, Internal damping.
+- Buttons: Give it a nudge, Reset, Pause, Undo cut, Cut up/down, Cut sideways,
+  Save PNG, Record 6s (webm), Quality High/Low, Copy share link.
+- Checkboxes: 1/4 speed, Show mesh, Sound, Low gravity, Slow-mo cuts,
+  Ambient music, Auto-orbit, Night studio, Haptics. Volume slider.
+- Live readouts: Mass, Volume, Kinetic energy, Pieces, cuts on slice and total.
+- Collapsible "Inside the experiment" notes explaining the method.
+- Panel must scroll inside its own box and never overlap the notes.
+  Equal-width button rows, 2-column checkbox grid.
+
+SOUND (WebAudio, no files)
+- Grab: short wet squish. Release: low wobbling tone that fades.
+- Cut: blade "shff" then a wet squelch and low thump. Undo: small pop.
+- Optional soft ambient pad. Master volume and a mute toggle.
+
+QUALITY RULES
+- Respect prefers-reduced-motion. Visible focus outlines. 44px touch targets
+  on phones. Labels on every control.
+- Share link stores colour, firmness, damping, night mode in the URL hash.
+- Wrap localStorage and clipboard use in try/catch.
+
+DELIVERY
+- Publish it as an artifact and also give me the downloadable .html.
+- Keep the reply short: what you built, what you left out.
+- Test the script syntax before publishing. If something can't fit, build the
+  core well and list what you skipped.
+```
 
 ---
 
